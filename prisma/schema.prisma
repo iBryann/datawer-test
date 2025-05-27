@@ -10,27 +10,38 @@ datasource db {
 
 model AuditLog {
   id          Int      @id @default(autoincrement())
-  action      String // Ex: 'CREATE', 'UPDATE', 'DELETE'
+  action      String
   tableName   String
-  recordId    String // ou String, dependendo da sua PK
-  oldData     Json? // Dados antes da alteração
-  newData     Json? // Dados após a alteração
-  performedBy String? // Usuário que executou (se tiver auth)
+  recordId    String
+  oldData     Json?
+  newData     Json?
+  performedBy String?
   timestamp   DateTime @default(now())
 
   @@map("audit_log")
 }
 
 model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(USER)
+
+  @@map("user")
+}
+
+model Professional {
   id             String   @id @default(uuid())
   createdAt      DateTime @default(now()) @map("created_at")
   updatedAt      DateTime @updatedAt @map("updated_at")
   name           String
   email          String   @unique
   qualifications String?
-  role           Role     @default(USER)
 
-  @@map("user")
+  @@map("professional")
 }
 
 enum Role {

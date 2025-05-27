@@ -1,12 +1,12 @@
 export const MSG = {
   ERROR: {
-    USER: {
-      GET: 'Error get user',
-      LIST: 'Error listing users',
-      CREATE: 'Error creating user',
-      UPDATE: 'Error updating user',
-      DELETE: 'Error deleting user',
-      NOT_FOUND: 'User not found',
+    PROF: {
+      GET: 'Error get professional',
+      LIST: 'Error listing professionals',
+      CREATE: 'Error creating professional',
+      UPDATE: 'Error updating professional',
+      DELETE: 'Error deleting professional',
+      NOT_FOUND: 'Professional not found',
     },
     INTERNAL_SERVER_ERROR: 'Internal Server Error',
   },

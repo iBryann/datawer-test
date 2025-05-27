@@ -1,44 +1,25 @@
-import { MSG, prisma } from '../utils';
-import { FastifyTypedInstance } from '../@types';
 import z from 'zod';
-import { Role } from '../prisma';
 
-export const userBodySchema = z.object({
-  id: z.string().uuid(),
-  createdAt: z.coerce.date(),
-  updatedAt: z.coerce.date(),
-  name: z.string(),
-  email: z.string().email(),
-  qualifications: z.string().nullable(),
-  role: z.nativeEnum(Role),
-});
+import { MSG, prisma } from '../../utils';
+import { FastifyTypedInstance } from '../../@types';
+import { profBodySchema, errorSchema, error500Schema } from './schemas';
 
-export const errorSchema = z.object({
-  error: z.string(),
-});
-
-export const error500Schema = z
-  .object({
-    error: z.string(),
-  })
-  .describe(MSG.ERROR.INTERNAL_SERVER_ERROR);
-
-export async function userRoutes(server: FastifyTypedInstance) {
+export async function professionalRoutes(server: FastifyTypedInstance) {
   server.get(
     '/list',
     {
       schema: {
-        tags: ['user'],
+        tags: ['professional'],
         description: 'Get all users',
       },
     },
     async (request, reply) => {
       try {
-        const users = await prisma.user.findMany();
+        const professionals = await prisma.professional.findMany();
 
-        reply.send(users);
+        reply.send(professionals);
       } catch (error) {
-        console.error(MSG.ERROR.USER.LIST, error);
+        console.error(MSG.ERROR.PROF.LIST, error);
         reply.status(500).send({ error: MSG.ERROR.INTERNAL_SERVER_ERROR });
       }
     }
@@ -48,14 +29,14 @@ export async function userRoutes(server: FastifyTypedInstance) {
     '/:id?',
     {
       schema: {
-        tags: ['user'],
+        tags: ['professional'],
         description: 'Get user by ID',
         params: z.object({
           id: z.string().uuid(),
         }),
         response: {
-          200: userBodySchema.describe('Get user'),
-          404: errorSchema.describe(MSG.ERROR.USER.NOT_FOUND),
+          200: profBodySchema.describe('Get user'),
+          404: errorSchema.describe(MSG.ERROR.PROF.NOT_FOUND),
           500: error500Schema,
         },
       },
@@ -64,19 +45,20 @@ export async function userRoutes(server: FastifyTypedInstance) {
       try {
         const { id } = request.params;
 
-        const user = id
-          ? await prisma.user.findUnique({
+        const professional = id
+          ? await prisma.professional.findUnique({
               where: {
                 id,
               },
             })
           : null;
 
-        if (!user) reply.status(404).send({ error: MSG.ERROR.USER.NOT_FOUND });
+        if (!professional)
+          reply.status(404).send({ error: MSG.ERROR.PROF.NOT_FOUND });
 
-        reply.status(200).send(user!);
+        reply.status(200).send(professional!);
       } catch (error) {
-        console.error(MSG.ERROR.USER.GET, error);
+        console.error(MSG.ERROR.PROF.GET, error);
         reply.status(500).send({ error: MSG.ERROR.INTERNAL_SERVER_ERROR });
       }
     }
@@ -86,7 +68,7 @@ export async function userRoutes(server: FastifyTypedInstance) {
     '',
     {
       schema: {
-        tags: ['user'],
+        tags: ['professional'],
         description: 'Create a new user',
         body: z.object({
           name: z.string(),
@@ -94,7 +76,7 @@ export async function userRoutes(server: FastifyTypedInstance) {
           qualifications: z.string(),
         }),
         response: {
-          200: userBodySchema.describe('Created user'),
+          200: profBodySchema.describe('Created user'),
           409: errorSchema.describe('Error creating user'),
           500: error500Schema,
         },
@@ -104,14 +86,14 @@ export async function userRoutes(server: FastifyTypedInstance) {
       try {
         const { name, email, qualifications } = request.body;
 
-        const existingUser = await prisma.user.findUnique({
+        const thereIsProf = await prisma.professional.findUnique({
           where: { email },
         });
 
-        if (existingUser)
+        if (thereIsProf)
           reply.status(409).send({ error: MSG.INFO.EMAIL_ALREADY_EXISTS });
 
-        const user = await prisma.user.create({
+        const user = await prisma.professional.create({
           data: {
             name,
             email,
@@ -121,7 +103,7 @@ export async function userRoutes(server: FastifyTypedInstance) {
 
         reply.status(200).send(user);
       } catch (error) {
-        console.error(MSG.ERROR.USER.CREATE, error);
+        console.error(MSG.ERROR.PROF.CREATE, error);
         reply.status(500).send({ error: MSG.ERROR.INTERNAL_SERVER_ERROR });
       }
     }
@@ -131,7 +113,7 @@ export async function userRoutes(server: FastifyTypedInstance) {
     '',
     {
       schema: {
-        tags: ['user'],
+        tags: ['professional'],
         description: 'Update user',
         body: z.object({
           id: z.string().uuid(),
@@ -140,7 +122,7 @@ export async function userRoutes(server: FastifyTypedInstance) {
           qualifications: z.string(),
         }),
         response: {
-          200: userBodySchema.describe('Update user'),
+          200: profBodySchema.describe('Update user'),
           409: errorSchema.describe('Error update user'),
           500: error500Schema,
         },
@@ -150,12 +132,12 @@ export async function userRoutes(server: FastifyTypedInstance) {
       try {
         const { id, name, email, qualifications } = request.body;
 
-        const existingUser = await prisma.user.findUnique({
+        const existingProf = await prisma.professional.findUnique({
           where: { id },
         });
 
-        if (existingUser?.email === email) {
-          await prisma.user
+        if (existingProf?.email === email) {
+          await prisma.professional
             .update({
               where: { id },
               data: {
@@ -163,12 +145,12 @@ export async function userRoutes(server: FastifyTypedInstance) {
                 qualifications,
               },
             })
-            .then((user) => {
-              reply.send(user);
+            .then((professional) => {
+              reply.send(professional);
             });
         }
 
-        const existingEmail = await prisma.user.findFirst({
+        const existingEmail = await prisma.professional.findFirst({
           where: { email },
         });
 
@@ -177,7 +159,7 @@ export async function userRoutes(server: FastifyTypedInstance) {
             .status(409)
             .send({ error: MSG.INFO.EMAIL_ALREADY_EXISTS });
         } else {
-          await prisma.user
+          await prisma.professional
             .update({
               where: { id },
               data: {
@@ -186,12 +168,12 @@ export async function userRoutes(server: FastifyTypedInstance) {
                 qualifications,
               },
             })
-            .then((user) => {
-              reply.send(user);
+            .then((professional) => {
+              reply.send(professional);
             });
         }
       } catch (error) {
-        console.error(MSG.ERROR.USER.UPDATE, error);
+        console.error(MSG.ERROR.PROF.UPDATE, error);
         reply.status(500).send({ error: MSG.ERROR.INTERNAL_SERVER_ERROR });
       }
     }
@@ -201,13 +183,13 @@ export async function userRoutes(server: FastifyTypedInstance) {
     '',
     {
       schema: {
-        tags: ['user'],
+        tags: ['professional'],
         description: 'Update user',
         body: z.object({
           id: z.string().uuid(),
         }),
         response: {
-          204: userBodySchema.describe('Delete user'),
+          204: profBodySchema.describe('Delete user'),
           409: errorSchema.describe('Error deleting user'),
           500: error500Schema,
         },
@@ -217,14 +199,14 @@ export async function userRoutes(server: FastifyTypedInstance) {
       try {
         const { id } = request.body;
 
-        const user = await prisma.user.delete({
+        const professional = await prisma.professional.delete({
           where: { id },
         });
 
-        console.log('delete', user);
-        reply.status(204).send(user);
+        console.log('delete', professional);
+        reply.status(204).send(professional);
       } catch (error) {
-        console.error(MSG.ERROR.USER.DELETE, error);
+        console.error(MSG.ERROR.PROF.DELETE, error);
         reply.status(500).send({ error: MSG.ERROR.INTERNAL_SERVER_ERROR });
       }
     }

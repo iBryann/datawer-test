@@ -23,6 +23,11 @@ export type AuditLog = $Result.DefaultSelection<Prisma.$AuditLogPayload>
  * 
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
+/**
+ * Model Professional
+ * 
+ */
+export type Professional = $Result.DefaultSelection<Prisma.$ProfessionalPayload>
 
 /**
  * Enums
@@ -185,6 +190,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.professional`: Exposes CRUD operations for the **Professional** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Professionals
+    * const professionals = await prisma.professional.findMany()
+    * ```
+    */
+  get professional(): Prisma.ProfessionalDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -626,7 +641,8 @@ export namespace Prisma {
 
   export const ModelName: {
     AuditLog: 'AuditLog',
-    User: 'User'
+    User: 'User',
+    Professional: 'Professional'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -645,7 +661,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "auditLog" | "user"
+      modelProps: "auditLog" | "user" | "professional"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -797,6 +813,80 @@ export namespace Prisma {
           }
         }
       }
+      Professional: {
+        payload: Prisma.$ProfessionalPayload<ExtArgs>
+        fields: Prisma.ProfessionalFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProfessionalFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfessionalPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProfessionalFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfessionalPayload>
+          }
+          findFirst: {
+            args: Prisma.ProfessionalFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfessionalPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProfessionalFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfessionalPayload>
+          }
+          findMany: {
+            args: Prisma.ProfessionalFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfessionalPayload>[]
+          }
+          create: {
+            args: Prisma.ProfessionalCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfessionalPayload>
+          }
+          createMany: {
+            args: Prisma.ProfessionalCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ProfessionalCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfessionalPayload>[]
+          }
+          delete: {
+            args: Prisma.ProfessionalDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfessionalPayload>
+          }
+          update: {
+            args: Prisma.ProfessionalUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfessionalPayload>
+          }
+          deleteMany: {
+            args: Prisma.ProfessionalDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProfessionalUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ProfessionalUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfessionalPayload>[]
+          }
+          upsert: {
+            args: Prisma.ProfessionalUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfessionalPayload>
+          }
+          aggregate: {
+            args: Prisma.ProfessionalAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProfessional>
+          }
+          groupBy: {
+            args: Prisma.ProfessionalGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProfessionalGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProfessionalCountArgs<ExtArgs>
+            result: $Utils.Optional<ProfessionalCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -883,6 +973,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     auditLog?: AuditLogOmit
     user?: UserOmit
+    professional?: ProfessionalOmit
   }
 
   /* Types for Logging */
@@ -2051,7 +2142,7 @@ export namespace Prisma {
     updatedAt: Date | null
     name: string | null
     email: string | null
-    qualifications: string | null
+    password: string | null
     role: $Enums.Role | null
   }
 
@@ -2061,7 +2152,7 @@ export namespace Prisma {
     updatedAt: Date | null
     name: string | null
     email: string | null
-    qualifications: string | null
+    password: string | null
     role: $Enums.Role | null
   }
 
@@ -2071,7 +2162,7 @@ export namespace Prisma {
     updatedAt: number
     name: number
     email: number
-    qualifications: number
+    password: number
     role: number
     _all: number
   }
@@ -2083,7 +2174,7 @@ export namespace Prisma {
     updatedAt?: true
     name?: true
     email?: true
-    qualifications?: true
+    password?: true
     role?: true
   }
 
@@ -2093,7 +2184,7 @@ export namespace Prisma {
     updatedAt?: true
     name?: true
     email?: true
-    qualifications?: true
+    password?: true
     role?: true
   }
 
@@ -2103,7 +2194,7 @@ export namespace Prisma {
     updatedAt?: true
     name?: true
     email?: true
-    qualifications?: true
+    password?: true
     role?: true
     _all?: true
   }
@@ -2186,7 +2277,7 @@ export namespace Prisma {
     updatedAt: Date
     name: string
     email: string
-    qualifications: string | null
+    password: string
     role: $Enums.Role
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
@@ -2213,7 +2304,7 @@ export namespace Prisma {
     updatedAt?: boolean
     name?: boolean
     email?: boolean
-    qualifications?: boolean
+    password?: boolean
     role?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -2223,7 +2314,7 @@ export namespace Prisma {
     updatedAt?: boolean
     name?: boolean
     email?: boolean
-    qualifications?: boolean
+    password?: boolean
     role?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -2233,7 +2324,7 @@ export namespace Prisma {
     updatedAt?: boolean
     name?: boolean
     email?: boolean
-    qualifications?: boolean
+    password?: boolean
     role?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -2243,11 +2334,11 @@ export namespace Prisma {
     updatedAt?: boolean
     name?: boolean
     email?: boolean
-    qualifications?: boolean
+    password?: boolean
     role?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "name" | "email" | "qualifications" | "role", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "name" | "email" | "password" | "role", ExtArgs["result"]["user"]>
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
@@ -2258,7 +2349,7 @@ export namespace Prisma {
       updatedAt: Date
       name: string
       email: string
-      qualifications: string | null
+      password: string
       role: $Enums.Role
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -2688,7 +2779,7 @@ export namespace Prisma {
     readonly updatedAt: FieldRef<"User", 'DateTime'>
     readonly name: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
-    readonly qualifications: FieldRef<"User", 'String'>
+    readonly password: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'Role'>
   }
     
@@ -3055,6 +3146,1012 @@ export namespace Prisma {
 
 
   /**
+   * Model Professional
+   */
+
+  export type AggregateProfessional = {
+    _count: ProfessionalCountAggregateOutputType | null
+    _min: ProfessionalMinAggregateOutputType | null
+    _max: ProfessionalMaxAggregateOutputType | null
+  }
+
+  export type ProfessionalMinAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    name: string | null
+    email: string | null
+    qualifications: string | null
+  }
+
+  export type ProfessionalMaxAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    name: string | null
+    email: string | null
+    qualifications: string | null
+  }
+
+  export type ProfessionalCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    updatedAt: number
+    name: number
+    email: number
+    qualifications: number
+    _all: number
+  }
+
+
+  export type ProfessionalMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    name?: true
+    email?: true
+    qualifications?: true
+  }
+
+  export type ProfessionalMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    name?: true
+    email?: true
+    qualifications?: true
+  }
+
+  export type ProfessionalCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    name?: true
+    email?: true
+    qualifications?: true
+    _all?: true
+  }
+
+  export type ProfessionalAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Professional to aggregate.
+     */
+    where?: ProfessionalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Professionals to fetch.
+     */
+    orderBy?: ProfessionalOrderByWithRelationInput | ProfessionalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProfessionalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Professionals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Professionals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Professionals
+    **/
+    _count?: true | ProfessionalCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProfessionalMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProfessionalMaxAggregateInputType
+  }
+
+  export type GetProfessionalAggregateType<T extends ProfessionalAggregateArgs> = {
+        [P in keyof T & keyof AggregateProfessional]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProfessional[P]>
+      : GetScalarType<T[P], AggregateProfessional[P]>
+  }
+
+
+
+
+  export type ProfessionalGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProfessionalWhereInput
+    orderBy?: ProfessionalOrderByWithAggregationInput | ProfessionalOrderByWithAggregationInput[]
+    by: ProfessionalScalarFieldEnum[] | ProfessionalScalarFieldEnum
+    having?: ProfessionalScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProfessionalCountAggregateInputType | true
+    _min?: ProfessionalMinAggregateInputType
+    _max?: ProfessionalMaxAggregateInputType
+  }
+
+  export type ProfessionalGroupByOutputType = {
+    id: string
+    createdAt: Date
+    updatedAt: Date
+    name: string
+    email: string
+    qualifications: string | null
+    _count: ProfessionalCountAggregateOutputType | null
+    _min: ProfessionalMinAggregateOutputType | null
+    _max: ProfessionalMaxAggregateOutputType | null
+  }
+
+  type GetProfessionalGroupByPayload<T extends ProfessionalGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProfessionalGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProfessionalGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProfessionalGroupByOutputType[P]>
+            : GetScalarType<T[P], ProfessionalGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProfessionalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    name?: boolean
+    email?: boolean
+    qualifications?: boolean
+  }, ExtArgs["result"]["professional"]>
+
+  export type ProfessionalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    name?: boolean
+    email?: boolean
+    qualifications?: boolean
+  }, ExtArgs["result"]["professional"]>
+
+  export type ProfessionalSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    name?: boolean
+    email?: boolean
+    qualifications?: boolean
+  }, ExtArgs["result"]["professional"]>
+
+  export type ProfessionalSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    name?: boolean
+    email?: boolean
+    qualifications?: boolean
+  }
+
+  export type ProfessionalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "name" | "email" | "qualifications", ExtArgs["result"]["professional"]>
+
+  export type $ProfessionalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Professional"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      createdAt: Date
+      updatedAt: Date
+      name: string
+      email: string
+      qualifications: string | null
+    }, ExtArgs["result"]["professional"]>
+    composites: {}
+  }
+
+  type ProfessionalGetPayload<S extends boolean | null | undefined | ProfessionalDefaultArgs> = $Result.GetResult<Prisma.$ProfessionalPayload, S>
+
+  type ProfessionalCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProfessionalFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProfessionalCountAggregateInputType | true
+    }
+
+  export interface ProfessionalDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Professional'], meta: { name: 'Professional' } }
+    /**
+     * Find zero or one Professional that matches the filter.
+     * @param {ProfessionalFindUniqueArgs} args - Arguments to find a Professional
+     * @example
+     * // Get one Professional
+     * const professional = await prisma.professional.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProfessionalFindUniqueArgs>(args: SelectSubset<T, ProfessionalFindUniqueArgs<ExtArgs>>): Prisma__ProfessionalClient<$Result.GetResult<Prisma.$ProfessionalPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Professional that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProfessionalFindUniqueOrThrowArgs} args - Arguments to find a Professional
+     * @example
+     * // Get one Professional
+     * const professional = await prisma.professional.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProfessionalFindUniqueOrThrowArgs>(args: SelectSubset<T, ProfessionalFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProfessionalClient<$Result.GetResult<Prisma.$ProfessionalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Professional that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfessionalFindFirstArgs} args - Arguments to find a Professional
+     * @example
+     * // Get one Professional
+     * const professional = await prisma.professional.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProfessionalFindFirstArgs>(args?: SelectSubset<T, ProfessionalFindFirstArgs<ExtArgs>>): Prisma__ProfessionalClient<$Result.GetResult<Prisma.$ProfessionalPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Professional that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfessionalFindFirstOrThrowArgs} args - Arguments to find a Professional
+     * @example
+     * // Get one Professional
+     * const professional = await prisma.professional.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProfessionalFindFirstOrThrowArgs>(args?: SelectSubset<T, ProfessionalFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProfessionalClient<$Result.GetResult<Prisma.$ProfessionalPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Professionals that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfessionalFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Professionals
+     * const professionals = await prisma.professional.findMany()
+     * 
+     * // Get first 10 Professionals
+     * const professionals = await prisma.professional.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const professionalWithIdOnly = await prisma.professional.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProfessionalFindManyArgs>(args?: SelectSubset<T, ProfessionalFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProfessionalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Professional.
+     * @param {ProfessionalCreateArgs} args - Arguments to create a Professional.
+     * @example
+     * // Create one Professional
+     * const Professional = await prisma.professional.create({
+     *   data: {
+     *     // ... data to create a Professional
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProfessionalCreateArgs>(args: SelectSubset<T, ProfessionalCreateArgs<ExtArgs>>): Prisma__ProfessionalClient<$Result.GetResult<Prisma.$ProfessionalPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Professionals.
+     * @param {ProfessionalCreateManyArgs} args - Arguments to create many Professionals.
+     * @example
+     * // Create many Professionals
+     * const professional = await prisma.professional.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProfessionalCreateManyArgs>(args?: SelectSubset<T, ProfessionalCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Professionals and returns the data saved in the database.
+     * @param {ProfessionalCreateManyAndReturnArgs} args - Arguments to create many Professionals.
+     * @example
+     * // Create many Professionals
+     * const professional = await prisma.professional.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Professionals and only return the `id`
+     * const professionalWithIdOnly = await prisma.professional.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ProfessionalCreateManyAndReturnArgs>(args?: SelectSubset<T, ProfessionalCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProfessionalPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Professional.
+     * @param {ProfessionalDeleteArgs} args - Arguments to delete one Professional.
+     * @example
+     * // Delete one Professional
+     * const Professional = await prisma.professional.delete({
+     *   where: {
+     *     // ... filter to delete one Professional
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProfessionalDeleteArgs>(args: SelectSubset<T, ProfessionalDeleteArgs<ExtArgs>>): Prisma__ProfessionalClient<$Result.GetResult<Prisma.$ProfessionalPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Professional.
+     * @param {ProfessionalUpdateArgs} args - Arguments to update one Professional.
+     * @example
+     * // Update one Professional
+     * const professional = await prisma.professional.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProfessionalUpdateArgs>(args: SelectSubset<T, ProfessionalUpdateArgs<ExtArgs>>): Prisma__ProfessionalClient<$Result.GetResult<Prisma.$ProfessionalPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Professionals.
+     * @param {ProfessionalDeleteManyArgs} args - Arguments to filter Professionals to delete.
+     * @example
+     * // Delete a few Professionals
+     * const { count } = await prisma.professional.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProfessionalDeleteManyArgs>(args?: SelectSubset<T, ProfessionalDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Professionals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfessionalUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Professionals
+     * const professional = await prisma.professional.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProfessionalUpdateManyArgs>(args: SelectSubset<T, ProfessionalUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Professionals and returns the data updated in the database.
+     * @param {ProfessionalUpdateManyAndReturnArgs} args - Arguments to update many Professionals.
+     * @example
+     * // Update many Professionals
+     * const professional = await prisma.professional.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Professionals and only return the `id`
+     * const professionalWithIdOnly = await prisma.professional.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ProfessionalUpdateManyAndReturnArgs>(args: SelectSubset<T, ProfessionalUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProfessionalPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Professional.
+     * @param {ProfessionalUpsertArgs} args - Arguments to update or create a Professional.
+     * @example
+     * // Update or create a Professional
+     * const professional = await prisma.professional.upsert({
+     *   create: {
+     *     // ... data to create a Professional
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Professional we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProfessionalUpsertArgs>(args: SelectSubset<T, ProfessionalUpsertArgs<ExtArgs>>): Prisma__ProfessionalClient<$Result.GetResult<Prisma.$ProfessionalPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Professionals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfessionalCountArgs} args - Arguments to filter Professionals to count.
+     * @example
+     * // Count the number of Professionals
+     * const count = await prisma.professional.count({
+     *   where: {
+     *     // ... the filter for the Professionals we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProfessionalCountArgs>(
+      args?: Subset<T, ProfessionalCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProfessionalCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Professional.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfessionalAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProfessionalAggregateArgs>(args: Subset<T, ProfessionalAggregateArgs>): Prisma.PrismaPromise<GetProfessionalAggregateType<T>>
+
+    /**
+     * Group by Professional.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfessionalGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProfessionalGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProfessionalGroupByArgs['orderBy'] }
+        : { orderBy?: ProfessionalGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProfessionalGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProfessionalGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Professional model
+   */
+  readonly fields: ProfessionalFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Professional.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProfessionalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Professional model
+   */
+  interface ProfessionalFieldRefs {
+    readonly id: FieldRef<"Professional", 'String'>
+    readonly createdAt: FieldRef<"Professional", 'DateTime'>
+    readonly updatedAt: FieldRef<"Professional", 'DateTime'>
+    readonly name: FieldRef<"Professional", 'String'>
+    readonly email: FieldRef<"Professional", 'String'>
+    readonly qualifications: FieldRef<"Professional", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Professional findUnique
+   */
+  export type ProfessionalFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Professional
+     */
+    select?: ProfessionalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Professional
+     */
+    omit?: ProfessionalOmit<ExtArgs> | null
+    /**
+     * Filter, which Professional to fetch.
+     */
+    where: ProfessionalWhereUniqueInput
+  }
+
+  /**
+   * Professional findUniqueOrThrow
+   */
+  export type ProfessionalFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Professional
+     */
+    select?: ProfessionalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Professional
+     */
+    omit?: ProfessionalOmit<ExtArgs> | null
+    /**
+     * Filter, which Professional to fetch.
+     */
+    where: ProfessionalWhereUniqueInput
+  }
+
+  /**
+   * Professional findFirst
+   */
+  export type ProfessionalFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Professional
+     */
+    select?: ProfessionalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Professional
+     */
+    omit?: ProfessionalOmit<ExtArgs> | null
+    /**
+     * Filter, which Professional to fetch.
+     */
+    where?: ProfessionalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Professionals to fetch.
+     */
+    orderBy?: ProfessionalOrderByWithRelationInput | ProfessionalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Professionals.
+     */
+    cursor?: ProfessionalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Professionals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Professionals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Professionals.
+     */
+    distinct?: ProfessionalScalarFieldEnum | ProfessionalScalarFieldEnum[]
+  }
+
+  /**
+   * Professional findFirstOrThrow
+   */
+  export type ProfessionalFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Professional
+     */
+    select?: ProfessionalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Professional
+     */
+    omit?: ProfessionalOmit<ExtArgs> | null
+    /**
+     * Filter, which Professional to fetch.
+     */
+    where?: ProfessionalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Professionals to fetch.
+     */
+    orderBy?: ProfessionalOrderByWithRelationInput | ProfessionalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Professionals.
+     */
+    cursor?: ProfessionalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Professionals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Professionals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Professionals.
+     */
+    distinct?: ProfessionalScalarFieldEnum | ProfessionalScalarFieldEnum[]
+  }
+
+  /**
+   * Professional findMany
+   */
+  export type ProfessionalFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Professional
+     */
+    select?: ProfessionalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Professional
+     */
+    omit?: ProfessionalOmit<ExtArgs> | null
+    /**
+     * Filter, which Professionals to fetch.
+     */
+    where?: ProfessionalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Professionals to fetch.
+     */
+    orderBy?: ProfessionalOrderByWithRelationInput | ProfessionalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Professionals.
+     */
+    cursor?: ProfessionalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Professionals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Professionals.
+     */
+    skip?: number
+    distinct?: ProfessionalScalarFieldEnum | ProfessionalScalarFieldEnum[]
+  }
+
+  /**
+   * Professional create
+   */
+  export type ProfessionalCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Professional
+     */
+    select?: ProfessionalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Professional
+     */
+    omit?: ProfessionalOmit<ExtArgs> | null
+    /**
+     * The data needed to create a Professional.
+     */
+    data: XOR<ProfessionalCreateInput, ProfessionalUncheckedCreateInput>
+  }
+
+  /**
+   * Professional createMany
+   */
+  export type ProfessionalCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Professionals.
+     */
+    data: ProfessionalCreateManyInput | ProfessionalCreateManyInput[]
+  }
+
+  /**
+   * Professional createManyAndReturn
+   */
+  export type ProfessionalCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Professional
+     */
+    select?: ProfessionalSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Professional
+     */
+    omit?: ProfessionalOmit<ExtArgs> | null
+    /**
+     * The data used to create many Professionals.
+     */
+    data: ProfessionalCreateManyInput | ProfessionalCreateManyInput[]
+  }
+
+  /**
+   * Professional update
+   */
+  export type ProfessionalUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Professional
+     */
+    select?: ProfessionalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Professional
+     */
+    omit?: ProfessionalOmit<ExtArgs> | null
+    /**
+     * The data needed to update a Professional.
+     */
+    data: XOR<ProfessionalUpdateInput, ProfessionalUncheckedUpdateInput>
+    /**
+     * Choose, which Professional to update.
+     */
+    where: ProfessionalWhereUniqueInput
+  }
+
+  /**
+   * Professional updateMany
+   */
+  export type ProfessionalUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Professionals.
+     */
+    data: XOR<ProfessionalUpdateManyMutationInput, ProfessionalUncheckedUpdateManyInput>
+    /**
+     * Filter which Professionals to update
+     */
+    where?: ProfessionalWhereInput
+    /**
+     * Limit how many Professionals to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Professional updateManyAndReturn
+   */
+  export type ProfessionalUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Professional
+     */
+    select?: ProfessionalSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Professional
+     */
+    omit?: ProfessionalOmit<ExtArgs> | null
+    /**
+     * The data used to update Professionals.
+     */
+    data: XOR<ProfessionalUpdateManyMutationInput, ProfessionalUncheckedUpdateManyInput>
+    /**
+     * Filter which Professionals to update
+     */
+    where?: ProfessionalWhereInput
+    /**
+     * Limit how many Professionals to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Professional upsert
+   */
+  export type ProfessionalUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Professional
+     */
+    select?: ProfessionalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Professional
+     */
+    omit?: ProfessionalOmit<ExtArgs> | null
+    /**
+     * The filter to search for the Professional to update in case it exists.
+     */
+    where: ProfessionalWhereUniqueInput
+    /**
+     * In case the Professional found by the `where` argument doesn't exist, create a new Professional with this data.
+     */
+    create: XOR<ProfessionalCreateInput, ProfessionalUncheckedCreateInput>
+    /**
+     * In case the Professional was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProfessionalUpdateInput, ProfessionalUncheckedUpdateInput>
+  }
+
+  /**
+   * Professional delete
+   */
+  export type ProfessionalDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Professional
+     */
+    select?: ProfessionalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Professional
+     */
+    omit?: ProfessionalOmit<ExtArgs> | null
+    /**
+     * Filter which Professional to delete.
+     */
+    where: ProfessionalWhereUniqueInput
+  }
+
+  /**
+   * Professional deleteMany
+   */
+  export type ProfessionalDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Professionals to delete
+     */
+    where?: ProfessionalWhereInput
+    /**
+     * Limit how many Professionals to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Professional without action
+   */
+  export type ProfessionalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Professional
+     */
+    select?: ProfessionalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Professional
+     */
+    omit?: ProfessionalOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -3085,11 +4182,23 @@ export namespace Prisma {
     updatedAt: 'updatedAt',
     name: 'name',
     email: 'email',
-    qualifications: 'qualifications',
+    password: 'password',
     role: 'role'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const ProfessionalScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    name: 'name',
+    email: 'email',
+    qualifications: 'qualifications'
+  };
+
+  export type ProfessionalScalarFieldEnum = (typeof ProfessionalScalarFieldEnum)[keyof typeof ProfessionalScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -3268,7 +4377,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"User"> | Date | string
     name?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
-    qualifications?: StringNullableFilter<"User"> | string | null
+    password?: StringFilter<"User"> | string
     role?: EnumRoleFilter<"User"> | $Enums.Role
   }
 
@@ -3278,7 +4387,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     name?: SortOrder
     email?: SortOrder
-    qualifications?: SortOrderInput | SortOrder
+    password?: SortOrder
     role?: SortOrder
   }
 
@@ -3291,7 +4400,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     name?: StringFilter<"User"> | string
-    qualifications?: StringNullableFilter<"User"> | string | null
+    password?: StringFilter<"User"> | string
     role?: EnumRoleFilter<"User"> | $Enums.Role
   }, "id" | "email">
 
@@ -3301,7 +4410,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     name?: SortOrder
     email?: SortOrder
-    qualifications?: SortOrderInput | SortOrder
+    password?: SortOrder
     role?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -3317,8 +4426,65 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     name?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
-    qualifications?: StringNullableWithAggregatesFilter<"User"> | string | null
+    password?: StringWithAggregatesFilter<"User"> | string
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
+  }
+
+  export type ProfessionalWhereInput = {
+    AND?: ProfessionalWhereInput | ProfessionalWhereInput[]
+    OR?: ProfessionalWhereInput[]
+    NOT?: ProfessionalWhereInput | ProfessionalWhereInput[]
+    id?: StringFilter<"Professional"> | string
+    createdAt?: DateTimeFilter<"Professional"> | Date | string
+    updatedAt?: DateTimeFilter<"Professional"> | Date | string
+    name?: StringFilter<"Professional"> | string
+    email?: StringFilter<"Professional"> | string
+    qualifications?: StringNullableFilter<"Professional"> | string | null
+  }
+
+  export type ProfessionalOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    qualifications?: SortOrderInput | SortOrder
+  }
+
+  export type ProfessionalWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    email?: string
+    AND?: ProfessionalWhereInput | ProfessionalWhereInput[]
+    OR?: ProfessionalWhereInput[]
+    NOT?: ProfessionalWhereInput | ProfessionalWhereInput[]
+    createdAt?: DateTimeFilter<"Professional"> | Date | string
+    updatedAt?: DateTimeFilter<"Professional"> | Date | string
+    name?: StringFilter<"Professional"> | string
+    qualifications?: StringNullableFilter<"Professional"> | string | null
+  }, "id" | "email">
+
+  export type ProfessionalOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    qualifications?: SortOrderInput | SortOrder
+    _count?: ProfessionalCountOrderByAggregateInput
+    _max?: ProfessionalMaxOrderByAggregateInput
+    _min?: ProfessionalMinOrderByAggregateInput
+  }
+
+  export type ProfessionalScalarWhereWithAggregatesInput = {
+    AND?: ProfessionalScalarWhereWithAggregatesInput | ProfessionalScalarWhereWithAggregatesInput[]
+    OR?: ProfessionalScalarWhereWithAggregatesInput[]
+    NOT?: ProfessionalScalarWhereWithAggregatesInput | ProfessionalScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Professional"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Professional"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Professional"> | Date | string
+    name?: StringWithAggregatesFilter<"Professional"> | string
+    email?: StringWithAggregatesFilter<"Professional"> | string
+    qualifications?: StringNullableWithAggregatesFilter<"Professional"> | string | null
   }
 
   export type AuditLogCreateInput = {
@@ -3401,7 +4567,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     email: string
-    qualifications?: string | null
+    password: string
     role?: $Enums.Role
   }
 
@@ -3411,7 +4577,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     email: string
-    qualifications?: string | null
+    password: string
     role?: $Enums.Role
   }
 
@@ -3421,7 +4587,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
   }
 
@@ -3431,7 +4597,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
   }
 
@@ -3441,7 +4607,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     name: string
     email: string
-    qualifications?: string | null
+    password: string
     role?: $Enums.Role
   }
 
@@ -3451,7 +4617,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
   }
 
@@ -3461,8 +4627,71 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  }
+
+  export type ProfessionalCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name: string
+    email: string
+    qualifications?: string | null
+  }
+
+  export type ProfessionalUncheckedCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name: string
+    email: string
+    qualifications?: string | null
+  }
+
+  export type ProfessionalUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ProfessionalUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ProfessionalCreateManyInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    name: string
+    email: string
+    qualifications?: string | null
+  }
+
+  export type ProfessionalUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ProfessionalUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -3673,7 +4902,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     name?: SortOrder
     email?: SortOrder
-    qualifications?: SortOrder
+    password?: SortOrder
     role?: SortOrder
   }
 
@@ -3683,7 +4912,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     name?: SortOrder
     email?: SortOrder
-    qualifications?: SortOrder
+    password?: SortOrder
     role?: SortOrder
   }
 
@@ -3693,7 +4922,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     name?: SortOrder
     email?: SortOrder
-    qualifications?: SortOrder
+    password?: SortOrder
     role?: SortOrder
   }
 
@@ -3705,6 +4934,33 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumRoleFilter<$PrismaModel>
     _max?: NestedEnumRoleFilter<$PrismaModel>
+  }
+
+  export type ProfessionalCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    qualifications?: SortOrder
+  }
+
+  export type ProfessionalMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    qualifications?: SortOrder
+  }
+
+  export type ProfessionalMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    qualifications?: SortOrder
   }
 
   export type StringFieldUpdateOperationsInput = {

@@ -17,6 +17,7 @@ CREATE TABLE "user" (
     "updated_at" DATETIME NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
     "qualifications" TEXT,
     "role" TEXT NOT NULL DEFAULT 'USER'
 );
