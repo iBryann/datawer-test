@@ -12,6 +12,7 @@ export const MSG = {
       CREATE: 'Error creating user',
       INVALID_CREDENTIALS: 'Invalid credentials',
     },
+    UNAUTHORIZED_REQUEST: 'Unauthorized request',
     INTERNAL_SERVER_ERROR: 'Internal Server Error',
   },
   INFO: {

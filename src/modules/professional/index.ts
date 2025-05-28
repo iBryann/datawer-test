@@ -4,10 +4,12 @@ import { MSG, prisma } from '../../utils';
 import { FastifyTypedInstance } from '../../@types';
 import { profBodySchema, errorSchema, error500Schema } from './schemas';
 
-export async function professionalRoutes(server: FastifyTypedInstance) {
-  server.get(
+export async function professionalRoutes(fastify: FastifyTypedInstance) {
+  fastify.get(
     '/list',
     {
+      // @ts-ignore
+      onRequest: [fastify.authenticate],
       schema: {
         tags: ['professional'],
         description: 'Get all users',
@@ -25,9 +27,11 @@ export async function professionalRoutes(server: FastifyTypedInstance) {
     }
   );
 
-  server.get(
+  fastify.get(
     '/:id?',
     {
+      // @ts-ignore
+      onRequest: [fastify.authenticate],
       schema: {
         tags: ['professional'],
         description: 'Get user by ID',
@@ -64,9 +68,11 @@ export async function professionalRoutes(server: FastifyTypedInstance) {
     }
   );
 
-  server.post(
+  fastify.post(
     '',
     {
+      // @ts-ignore
+      onRequest: [fastify.authenticate],
       schema: {
         tags: ['professional'],
         description: 'Create a new user',
@@ -109,9 +115,11 @@ export async function professionalRoutes(server: FastifyTypedInstance) {
     }
   );
 
-  server.patch(
+  fastify.patch(
     '',
     {
+      // @ts-ignore
+      onRequest: [fastify.authenticate],
       schema: {
         tags: ['professional'],
         description: 'Update user',
@@ -179,9 +187,11 @@ export async function professionalRoutes(server: FastifyTypedInstance) {
     }
   );
 
-  server.delete(
+  fastify.delete(
     '',
     {
+      // @ts-ignore
+      onRequest: [fastify.authenticate],
       schema: {
         tags: ['professional'],
         description: 'Update user',

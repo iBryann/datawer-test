@@ -1,4 +1,4 @@
-import { fastify } from 'fastify';
+import { fastify as Fastify, FastifyReply, FastifyRequest } from 'fastify';
 import { fastifyCors } from '@fastify/cors';
 import {
   jsonSchemaTransform,
@@ -10,27 +10,23 @@ import { fastifySwagger } from '@fastify/swagger';
 import { fastifySwaggerUi } from '@fastify/swagger-ui';
 import FastifyJWT from '@fastify/jwt';
 
+import { authenticate } from './modules';
 import { registerRoutes } from './routes';
 
 async function initServer() {
-  const server = fastify().withTypeProvider<ZodTypeProvider>();
+  const fastify = Fastify().withTypeProvider<ZodTypeProvider>();
 
-  server.setValidatorCompiler(validatorCompiler);
-  server.setSerializerCompiler(serializerCompiler);
+  fastify.setValidatorCompiler(validatorCompiler);
+  fastify.setSerializerCompiler(serializerCompiler);
 
-  // server.addHook('onRequest', async (request, reply) => {
-  //   try {
-  //     console.log(`Received request: ${request.method} ${request.url}`);
-  //   } catch (err) {
-  //     reply.send(err);
-  //   }
-  // });
-
-  server.register(FastifyJWT, {
+  fastify.register(FastifyJWT, {
     secret: process.env.JWT_SECRET,
   });
-  server.register(fastifyCors, { origin: '*' });
-  server.register(fastifySwagger, {
+
+  fastify.decorate('authenticate', authenticate);
+
+  fastify.register(fastifyCors, { origin: '*' });
+  fastify.register(fastifySwagger, {
     openapi: {
       info: {
         title: 'API',
@@ -40,15 +36,15 @@ async function initServer() {
     },
     transform: jsonSchemaTransform,
   });
-  server.register(fastifySwaggerUi, {
+  fastify.register(fastifySwaggerUi, {
     routePrefix: '/docs',
   });
 
-  await registerRoutes(server);
+  await registerRoutes(fastify);
 
-  server.listen({ port: 3333 }, (err, address) => {
-    if (err) {
-      server.log.error(err);
+  fastify.listen({ port: 3333 }, (error, address) => {
+    if (error) {
+      fastify.log.error(error);
       process.exit(1);
     }
 

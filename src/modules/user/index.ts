@@ -10,8 +10,8 @@ import {
   signupResponseSchema,
 } from './schema';
 
-export async function userRoutes(server: FastifyTypedInstance) {
-  server.post(
+export async function userRoutes(fastify: FastifyTypedInstance) {
+  fastify.post(
     '/signin',
     {
       schema: {
@@ -51,7 +51,7 @@ export async function userRoutes(server: FastifyTypedInstance) {
             name: user.name,
             role: user.role,
           };
-          const accessToken = server.jwt.sign(userWithoutPassword);
+          const accessToken = fastify.jwt.sign(userWithoutPassword);
           const response = {
             ...userWithoutPassword,
             accessToken,
@@ -68,7 +68,7 @@ export async function userRoutes(server: FastifyTypedInstance) {
     }
   );
 
-  server.post(
+  fastify.post(
     '/signup',
     {
       schema: {
