@@ -49,6 +49,8 @@ async function initServer() {
     }
 
     console.log('🚀 HTTP server running!');
+    console.log('Url: http://localhost:3333/');
+    console.log('Doc: http://localhost:3333/docs');
   });
 }
 
