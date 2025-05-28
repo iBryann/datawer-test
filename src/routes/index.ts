@@ -1,9 +1,10 @@
 import { FastifyTypedInstance } from '../@types';
 
 import { defaultRoutes } from './default';
-import { professionalRoutes } from './professional';
+import { professionalRoutes, userRoutes } from '../modules';
 
 export async function registerRoutes(server: FastifyTypedInstance) {
-  await server.register(defaultRoutes, { prefix: '/' });
-  await server.register(professionalRoutes, { prefix: '/professional' });
+  await server.register(defaultRoutes, { prefix: '/api' });
+  await server.register(userRoutes, { prefix: '/api/user' });
+  await server.register(professionalRoutes, { prefix: '/api/professional' });
 }

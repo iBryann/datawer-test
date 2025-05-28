@@ -77,7 +77,7 @@ export async function professionalRoutes(server: FastifyTypedInstance) {
         }),
         response: {
           200: profBodySchema.describe('Created user'),
-          409: errorSchema.describe('Error creating user'),
+          409: errorSchema.describe(MSG.ERROR.PROF.CREATE),
           500: error500Schema,
         },
       },

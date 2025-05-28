@@ -1,5 +1,3 @@
-import { z } from 'zod';
-
 import { FastifyTypedInstance } from '../@types';
 
 export async function defaultRoutes(server: FastifyTypedInstance) {
