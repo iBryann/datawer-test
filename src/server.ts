@@ -34,6 +34,20 @@ async function initServer() {
         description: 'API documentation',
         version: '1.0.0',
       },
+      security: [
+        {
+          bearerAuth: [],
+        },
+      ],
+      components: {
+        securitySchemes: {
+          bearerAuth: {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT',
+          },
+        },
+      },
     },
     transform: jsonSchemaTransform,
   });
