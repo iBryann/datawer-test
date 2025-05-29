@@ -21,7 +21,7 @@ export async function professionalRoutes(fastify: FastifyTypedInstance) {
 
         reply.send(professionals);
       } catch (error) {
-        console.error(MSG.ERROR.PROF.LIST, error);
+        console.error(error);
         reply.status(500).send({ error: MSG.ERROR.INTERNAL_SERVER_ERROR });
       }
     }
@@ -62,7 +62,7 @@ export async function professionalRoutes(fastify: FastifyTypedInstance) {
 
         reply.status(200).send(professional!);
       } catch (error) {
-        console.error(MSG.ERROR.PROF.GET, error);
+        console.error(error);
         reply.status(500).send({ error: MSG.ERROR.INTERNAL_SERVER_ERROR });
       }
     }
@@ -109,7 +109,7 @@ export async function professionalRoutes(fastify: FastifyTypedInstance) {
 
         reply.status(200).send(user);
       } catch (error) {
-        console.error(MSG.ERROR.PROF.CREATE, error);
+        console.error(error);
         reply.status(500).send({ error: MSG.ERROR.INTERNAL_SERVER_ERROR });
       }
     }
@@ -181,7 +181,7 @@ export async function professionalRoutes(fastify: FastifyTypedInstance) {
             });
         }
       } catch (error) {
-        console.error(MSG.ERROR.PROF.UPDATE, error);
+        console.error(error);
         reply.status(500).send({ error: MSG.ERROR.INTERNAL_SERVER_ERROR });
       }
     }
@@ -216,7 +216,7 @@ export async function professionalRoutes(fastify: FastifyTypedInstance) {
         console.log('delete', professional);
         reply.status(204).send(professional);
       } catch (error) {
-        console.error(MSG.ERROR.PROF.DELETE, error);
+        console.error(error);
         reply.status(500).send({ error: MSG.ERROR.INTERNAL_SERVER_ERROR });
       }
     }
