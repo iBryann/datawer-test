@@ -12,6 +12,7 @@ import FastifyJWT from '@fastify/jwt';
 
 import { authenticate } from './modules';
 import { registerRoutes } from './routes';
+import { populateDatabase } from './utils';
 
 async function initServer() {
   const fastify = Fastify().withTypeProvider<ZodTypeProvider>();
@@ -51,6 +52,8 @@ async function initServer() {
     console.log('🚀 HTTP server running!');
     console.log('Url: http://localhost:3333/');
     console.log('Doc: http://localhost:3333/docs');
+
+    populateDatabase();
   });
 }
 

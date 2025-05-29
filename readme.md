@@ -47,4 +47,6 @@ npm run dev
 
 ---
 
-OBS: Deixei o .env preenchido para facilitar, mas essa prática em produção configura má prática de segurança.
+OBS 1: Na inicialização da API estou populando o banco com um mock para facilitar a utilização.
+
+OBS 2: Deixei o .env preenchido para facilitar, mas essa prática em produção configura má prática de segurança.
