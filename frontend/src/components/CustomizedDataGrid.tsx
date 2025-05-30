@@ -1,12 +1,12 @@
 import { DataGrid } from '@mui/x-data-grid';
-import { columns, rows } from '../mock/gridData';
+import { COLUMNS, ROWS } from '../mock/gridData';
 
 export default function CustomizedDataGrid() {
   return (
     <DataGrid
       checkboxSelection
-      rows={rows}
-      columns={columns}
+      rows={ROWS}
+      columns={COLUMNS}
       getRowClassName={(params) =>
         params.indexRelativeToCurrentPage % 2 === 0 ? 'even' : 'odd'
       }

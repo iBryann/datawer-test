@@ -20,7 +20,8 @@
     "@mui/x-tree-view": "^8.5.0",
     "dayjs": "^1.11.13",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "react-router": "^7.6.1"
   },
   "devDependencies": {
     "@types/react": "latest",
