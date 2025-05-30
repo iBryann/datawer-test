@@ -12,12 +12,14 @@ export const AppRoutes = () => {
       <Routes>
         <Route
           index
-          element={<Home />}
-        />
-        <Route
-          path='/login'
           element={<SignIn />}
         />
+
+        <Route
+          path='/home'
+          element={<Home />}
+        />
+
         <Route
           path='*'
           element={<PageNotFound />}

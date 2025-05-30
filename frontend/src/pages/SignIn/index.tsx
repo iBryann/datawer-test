@@ -1,4 +1,4 @@
-import * as React from 'react';
+import z from 'zod';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,10 +9,14 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import AppTheme from '../../theme/AppTheme';
 import ColorModeSelect from '../../theme/ColorModeSelect';
 import logoImg from '../../assets/logo.jpeg';
+import { userStore } from '../../store';
+import { API } from '../../service';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -56,50 +60,33 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
+export interface IFormData {
+  email: string;
+  password: string;
+}
+
+const formSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(5),
+});
+
 export const SignIn = (props: { disableCustomTheme?: boolean }) => {
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
-  const [passwordError, setPasswordError] = React.useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
+  const { user, signin, logout } = userStore();
+  const {
+    formState: { errors },
+    register,
+    handleSubmit,
+  } = useForm<IFormData>({
+    defaultValues: {
+      email: 'admin@example.com',
+      password: 'admin',
+    },
+    resolver: zodResolver(formSchema),
+  });
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    if (emailError || passwordError) {
-      event.preventDefault();
-      return;
-    }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
-
-  const validateInputs = () => {
-    const email = document.getElementById('email') as HTMLInputElement;
-    const password = document.getElementById('password') as HTMLInputElement;
-
-    let isValid = true;
-
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-      setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
-      isValid = false;
-    } else {
-      setEmailError(false);
-      setEmailErrorMessage('');
-    }
-
-    if (!password.value || password.value.length < 6) {
-      setPasswordError(true);
-      setPasswordErrorMessage('Password must be at least 6 characters long.');
-      isValid = false;
-    } else {
-      setPasswordError(false);
-      setPasswordErrorMessage('');
-    }
-
-    return isValid;
-  };
+  async function onSubmit(data: IFormData) {
+    signin(data);
+  }
 
   return (
     <AppTheme {...props}>
@@ -112,7 +99,10 @@ export const SignIn = (props: { disableCustomTheme?: boolean }) => {
           sx={{ position: 'fixed', top: '1rem', right: '1rem' }}
         />
         <Card variant='outlined'>
-          <Box sx={{ margin: 'auto', width: 100 }}>
+          <Box
+            sx={{ margin: 'auto', width: 100 }}
+            onClick={() => logout()}
+          >
             <img
               src={logoImg}
               alt='DataWer'
@@ -127,49 +117,49 @@ export const SignIn = (props: { disableCustomTheme?: boolean }) => {
           >
             Sign in
           </Typography>
+
           <Box
             component='form'
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             noValidate
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
               width: '100%',
+              display: 'flex',
               gap: 2,
+              flexDirection: 'column',
             }}
           >
             <FormControl>
               <FormLabel htmlFor='email'>Email</FormLabel>
               <TextField
-                error={emailError}
-                helperText={emailErrorMessage}
-                id='email'
                 type='email'
-                name='email'
                 placeholder='your@email.com'
                 autoComplete='email'
                 autoFocus
                 required
                 fullWidth
                 variant='outlined'
-                color={emailError ? 'error' : 'primary'}
+                error={!!errors.email}
+                helperText={errors.email?.message}
+                color={!!errors.email ? 'error' : 'primary'}
+                {...register('email')}
               />
             </FormControl>
+
             <FormControl>
               <FormLabel htmlFor='password'>Password</FormLabel>
               <TextField
-                error={passwordError}
-                helperText={passwordErrorMessage}
-                name='password'
                 placeholder='••••••'
                 type='password'
-                id='password'
                 autoComplete='current-password'
                 autoFocus
                 required
                 fullWidth
                 variant='outlined'
-                color={passwordError ? 'error' : 'primary'}
+                error={!!errors.password}
+                helperText={errors.password?.message}
+                color={!!errors.password ? 'error' : 'primary'}
+                {...register('password')}
               />
             </FormControl>
 
@@ -178,7 +168,6 @@ export const SignIn = (props: { disableCustomTheme?: boolean }) => {
               fullWidth
               variant='contained'
               sx={{ mt: 2 }}
-              onClick={validateInputs}
             >
               Sign in
             </Button>
